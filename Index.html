@@ -1,1 +1,360 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shira Nail Studio</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #fff7fa;
+      color: #333;
+    }
+
+    header {
+      background: #f8b8ce;
+      padding: 28px 20px;
+      text-align: center;
+      color: white;
+    }
+
+    header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #d66b91;
+    }
+
+    .service {
+      border: 2px solid #f3c4d3;
+      border-radius: 15px;
+      padding: 18px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .service:hover {
+      background: #fff0f5;
+    }
+
+    .service.selected {
+      background: #f8b8ce;
+      color: white;
+      border-color: #f8b8ce;
+    }
+
+    .service-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .service-time {
+      font-size: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: #e889aa;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #d96f95;
+    }
+
+    .success {
+      display: none;
+      text-align: center;
+    }
+
+    .success-icon {
+      font-size: 55px;
+      margin-bottom: 15px;
+    }
+
+    .appointment-details {
+      background: #fff0f5;
+      padding: 18px;
+      border-radius: 15px;
+      margin: 20px 0;
+      line-height: 2;
+    }
+
+    .back {
+      background: transparent;
+      color: #d66b91;
+      border: 1px solid #f0b0c6;
+      margin-top: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #999;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Shira Nail Studio</h1>
+  <p>שירה אסרף • קביעת תורים</p>
+</header>
+
+<div class="container">
+
+  <div class="card" id="bookingForm">
+
+    <h2>קביעת תור 💗</h2>
+
+    <div id="step1">
+      <h3 style="margin-bottom:15px;">בחרי טיפול</h3>
+
+      <div class="service" onclick="selectService('לק ג׳ל', 60, this)">
+        <div class="service-title">לק ג׳ל</div>
+        <div class="service-time">משך הטיפול: כ־60 דקות</div>
+      </div>
+
+      <div class="service" onclick="selectService('עיצוב גבות טבעיות', 50, this)">
+        <div class="service-title">עיצוב גבות טבעיות</div>
+        <div class="service-time">משך הטיפול: כ־50 דקות</div>
+      </div>
+
+      <div class="service" onclick="selectService('מיקרובליידינג', 150, this)">
+        <div class="service-title">מיקרובליידינג</div>
+        <div class="service-time">משך הטיפול: כ־150 דקות</div>
+      </div>
+    </div>
+
+    <div id="step2" style="display:none; margin-top:25px;">
+
+      <h3 style="margin-bottom:15px;">בחרי תאריך ושעה</h3>
+
+      <label>תאריך</label>
+      <input type="date" id="date">
+
+      <label>שעה</label>
+      <select id="time">
+        <option value="">בחרי שעה</option>
+      </select>
+
+    </div>
+
+    <div id="step3" style="display:none; margin-top:25px;">
+
+      <h3 style="margin-bottom:15px;">הפרטים שלך</h3>
+
+      <label>שם מלא</label>
+      <input type="text" id="name" placeholder="הכניסי שם מלא">
+
+      <label>מספר טלפון</label>
+      <input type="tel" id="phone" placeholder="050-0000000">
+
+      <label>הערה (לא חובה)</label>
+      <textarea id="note" placeholder="משהו שחשוב לנו לדעת?"></textarea>
+
+      <button onclick="confirmAppointment()">
+        אישור קביעת תור 💗
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="card success" id="success">
+
+    <div class="success-icon">✅</div>
+
+    <h2>התור נקבע בהצלחה!</h2>
+
+    <p>תודה שקבעת תור אצל Shira Nail Studio</p>
+
+    <div class="appointment-details">
+      <div><strong>טיפול:</strong> <span id="resultService"></span></div>
+      <div><strong>תאריך:</strong> <span id="resultDate"></span></div>
+      <div><strong>שעה:</strong> <span id="resultTime"></span></div>
+      <div><strong>שם:</strong> <span id="resultName"></span></div>
+    </div>
+
+    <button class="back" onclick="location.reload()">
+      קביעת תור נוסף
+    </button>
+
+  </div>
+
+</div>
+
+<footer>
+  Shira Nail Studio © 2026
+</footer>
+
+<script>
+
+let selectedService = "";
+let selectedDuration = 0;
+
+function selectService(service, duration, element) {
+
+  selectedService = service;
+  selectedDuration = duration;
+
+  document.querySelectorAll(".service").forEach(el => {
+    el.classList.remove("selected");
+  });
+
+  element.classList.add("selected");
+
+  document.getElementById("step2").style.display = "block";
+
+  const dateInput = document.getElementById("date");
+
+  const today = new Date();
+  const minDate = today.toISOString().split("T")[0];
+
+  dateInput.min = minDate;
+
+  dateInput.addEventListener("change", generateTimes);
+}
+
+function generateTimes() {
+
+  const select = document.getElementById("time");
+
+  select.innerHTML = '<option value="">בחרי שעה</option>';
+
+  const date = new Date(document.getElementById("date").value);
+
+  if (isNaN(date)) return;
+
+  const day = date.getDay();
+
+  // שבת
+  if (day === 6) {
+    select.innerHTML = '<option value="">שבת - הסטודיו סגור</option>';
+    return;
+  }
+
+  let startHour = 8;
+  let endHour = day === 5 ? 15 : 20;
+
+  for (let hour = startHour; hour < endHour; hour++) {
+
+    for (let minute of [0, 30]) {
+
+      const totalMinutes = hour * 60 + minute;
+
+      const endTime = totalMinutes + selectedDuration;
+
+      if (endTime <= endHour * 60) {
+
+        const h = String(hour).padStart(2, "0");
+        const m = String(minute).padStart(2, "0");
+
+        const option = document.createElement("option");
+
+        option.value = `${h}:${m}`;
+        option.textContent = `${h}:${m}`;
+
+        select.appendChild(option);
+      }
+    }
+  }
+
+  document.getElementById("step3").style.display = "block";
+}
+
+function confirmAppointment() {
+
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const date = document.getElementById("date").value;
+  const time = document.getElementById("time").value;
+  const note = document.getElementById("note").value.trim();
+
+  if (!selectedService) {
+    alert("נא לבחור טיפול");
+    return;
+  }
+
+  if (!date || !time) {
+    alert("נא לבחור תאריך ושעה");
+    return;
+  }
+
+  if (!name || !phone) {
+    alert("נא למלא שם ומספר טלפון");
+    return;
+  }
+
+  document.getElementById("resultService").textContent = selectedService;
+  document.getElementById("resultDate").textContent = date;
+  document.getElementById("resultTime").textContent = time;
+  document.getElementById("resultName").textContent = name;
+
+  document.getElementById("bookingForm").style.display = "none";
+  document.getElementById("success").style.display = "block";
+
+}
+
+</script>
+
+</body>
+</html>
